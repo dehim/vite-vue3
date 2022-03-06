@@ -3,6 +3,7 @@
 </template>
 <script lang="ts">
   import { defineComponent, ref, unref, nextTick, onMounted, computed } from 'vue';
+  import { columns, searchFormSchema } from './data';
   import { AppHot } from '/@/components/HTable';
   export default defineComponent({
     name: 'HForm',
@@ -28,6 +29,8 @@
           data: data,
           rowHeaders: true,
           colHeaders: true,
+          language: 'zh-CN',
+          licenseKey: '14005-739E3-66751-EB728-AE038',
           ...htData,
         };
         return defaultOptions as PropType<any>;
@@ -48,6 +51,8 @@
 
       return {
         hotRef,
+        columns,
+        searchFormSchema,
       };
     },
   });

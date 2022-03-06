@@ -9,20 +9,28 @@ const laboratory: AppRouteModule = {
   component: LAYOUT,
   redirect: '/laboratory/index1',
   meta: {
-    hideChildrenInMenu: true,
+    orderNo: 5,
     icon: 'ion:aperture-outline',
     title: t('routes.laboratory.menu'),
-    orderNo: 5,
   },
   children: [
     {
       path: 'index1',
-      name: 'Handsontable',
+      name: 'Handsontable1',
       component: () => import('/@/views/laboratory/index1.vue'),
       meta: {
-        title: t('routes.laboratory.menu'),
+        // affix: true,
         icon: 'simple-icons:about-dot-me',
-        hideMenu: true,
+        title: t('routes.laboratory.index1'),
+      },
+    },
+    {
+      path: 'index2',
+      name: 'Handsontable2',
+      component: () => import('/@/views/laboratory/index2.vue'),
+      meta: {
+        icon: 'simple-icons:about-dot-me',
+        title: t('routes.laboratory.index2'),
       },
     },
   ],
