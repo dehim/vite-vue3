@@ -4,34 +4,25 @@
 <script lang="ts">
   import { defineComponent, ref, unref, nextTick, onMounted, computed } from 'vue';
   import { columns, searchFormSchema } from './data';
-  import { AppHot } from '/@/components/HTable';
+  import Handsontable from '/@/components/HTable';
+  import { initHot } from '/@/components/HTable';
   export default defineComponent({
     name: 'HForm',
     props: {
-      htData: {
+      htSettings: {
         type: Object as PropType<any>,
-        default: () => ({}),
+        default: () => ({
+          data: Handsontable.helper.createSpreadsheetData(10, 10),
+        }),
       },
     },
     setup(props) {
       const hotRef = ref(null);
 
       const getHtSettings = computed(() => {
-        const { htData } = props;
-
-        const data = [
-          ['', 'Tesla', 'Volvo', 'Toyota', 'Ford'],
-          ['2019', 10, 11, 12, 13],
-          ['2020', 20, 11, 14, 13],
-          ['2021', 30, 15, 12, 13],
-        ];
+        const { htSettings } = props;
         const defaultOptions: PropType<any> = {
-          data: data,
-          rowHeaders: true,
-          colHeaders: true,
-          language: 'zh-CN',
-          licenseKey: '14005-739E3-66751-EB728-AE038',
-          ...htData,
+          ...htSettings,
         };
         return defaultOptions as PropType<any>;
       });
@@ -42,10 +33,12 @@
         if (!hot) {
           return;
         }
-        const appHot_methods = AppHot.methods;
-        if (appHot_methods) {
-          appHot_methods.init(hot, { ...unref(getHtSettings) });
-        }
+        // const appHot_methods = AppHot.methods;
+        // if (appHot_methods) {
+        //   appHot_methods.init(hot, { ...unref(getHtSettings) });
+        // }
+        const hotInstance = await initHot(hot, { ...unref(getHtSettings) });
+        return hotInstance;
       }
       onMounted(init);
 
